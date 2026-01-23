@@ -1,0 +1,14 @@
+Projectname: Genos
+A semi-automatic pipelined video creation plattform for handling multiple social media accounts and reliably and permanently feeds them new AI-generated short-videos aiming to archieve maximum views, likes, comments and viewer retention time.
+
+LAIM - Backend (Module Text to Text (LLM), Text to Picture, Text to Video, Picture to Video, Upload to Everywhere). This module is responsible for handling the project-status of each project, changing values in the manifest (single source of truth), creating prompts, assets and API-calls either via API or via RPA (robotic process automation) on a virtualized PC. It has a overlying orchestrator, which handles the states and is the master of the queue, basically "what comes next". 
+
+ELMON - Human in the loop for curation (App in style of e.g. Tinder), in which components like generated texts from LLMs, pictures or videos, are being approved or denied, and optionally, to generate more usable data, are being given stars for certian defined elements or flags like "uncanny". 
+
+Krieta - It's a building kit for video formats like "Top 5 in which bed would you rather lay in?", "Animals in the forest are going on an adventure". It's there to serve as a quick way to implement video ideas or ideas taken from other viral shorts and not having to have a code-interaction, just simple building blocks clicked together with adequate prompts. 
+
+Produsa - This is a initiator for creating orders for bulk-video-generation based off of the formats created in Krieta. Optionally there can be assigned custom evaluation criteria, which will then also display in ELMON. Can be set to optional or mandatory, so if the video is approved/denied without giving feedback to the mandatory elements, they will pop up for the user to rate. There can also be seen the status of the created videos and which sub-step is currently being executed.
+
+Stamensau - Database, which is being fed data from ELMON and the social media statistics like views, likes, comments, viewer retention time and what else is available. Stamensau will eventually after enough iterations take control over produsa and initiate video creation based off of which types of videos are working and which are not, it then should behave like evolution where mostly working video ideas are being generated. Fundamental idea is Stamensau / Produsa has a daily max. quota of producable videos and decides, how to distribute the orders for maximum success on the platforms. This is btw the only way to scale up, someday it's thought that Genos will handle >100 channels with high quality videos which are maximized for success.
+
+Checkamol - Statistics from Stamensau can be viewed here with a great variety of analytics and graphs.
