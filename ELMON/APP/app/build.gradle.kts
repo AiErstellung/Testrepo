@@ -18,7 +18,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "VIDEOS_JSON_URL", "\"https://raw.githubusercontent.com/USER/REPO/main/pending/videos.json\"")
+        buildConfigField("String", "VIDEOS_JSON_URL", "\"https://raw.githubusercontent.com/AiErstellung/Testrepo/main/pending/videos.json\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
