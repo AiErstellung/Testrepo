@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_theme_dark_background">#1C1B1F</color>
+    <color name="md_theme_dark_error">#F2B8B5</color>
+    <color name="md_theme_dark_onPrimary">#381E72</color>
+    <color name="md_theme_dark_primary">#D0BCFF</color>
+    <color name="md_theme_dark_surface">#1C1B1F</color>
+    <color name="md_theme_light_background">#FFFBFF</color>
+    <color name="md_theme_light_error">#B3261E</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primary">#6750A4</color>
+    <color name="md_theme_light_surface">#FFFBFF</color>
+    <color name="purple_500">#6200EE</color>
+    <string name="app_name">Elmon Video Reviewer</string>
+    <string name="loading">Loading videos...</string>
+    <string name="no_videos">No pending videos available.</string>
+    <string name="rating_action">Rate this video</string>
+    <style name="Theme.ElmonVideoReviewer" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
