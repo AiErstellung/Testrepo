@@ -26,7 +26,8 @@ import com.elmon.app.data.model.VideoItem
 fun VideoFeed(
     videos: List<VideoItem>,
     pagerState: PagerState,
-    onRate: (VideoItem, Boolean, Int) -> Unit,
+    onLike: (VideoItem, Int) -> Unit,
+    onDislike: (VideoItem, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     VerticalPager(
@@ -73,8 +74,8 @@ fun VideoFeed(
             ) {
                 RatingControls(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onLike = { onRate(video, true, page) },
-                    onDislike = { onRate(video, false, page) }
+                    onLike = { onLike(video, page) },
+                    onDislike = { onDislike(video, page) }
                 )
             }
         }

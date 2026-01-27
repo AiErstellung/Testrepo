@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class VideoRating(
     @PrimaryKey val videoId: String,
     val liked: Boolean,
-    val timestamp: Long
+    val timestamp: Long,
+    val feedback: String?
 )

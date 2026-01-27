@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,6 +9,19 @@ plugins {
 
 val composeUiVersion = "1.5.3"
 val material3Version = "1.2.0"
+
+val localProperties = gradleLocalProperties(
+    rootDir,
+    providers)
+fun requireLocalProperty(key: String) =
+    localProperties[key]?.toString()?.takeIf { it.isNotBlank() }
+        ?: error("$key must be defined in local.properties (and kept out of Git)")
+
+val storageEndpoint = requireLocalProperty("ELMON_STORAGE_ENDPOINT")
+val storageBucket = requireLocalProperty("ELMON_STORAGE_BUCKET")
+val storageRegion = requireLocalProperty("ELMON_STORAGE_REGION")
+val storageAccessKey = requireLocalProperty("ELMON_STORAGE_ACCESS_KEY")
+val storageSecretKey = requireLocalProperty("ELMON_STORAGE_SECRET_KEY")
 
 android {
     namespace = "com.elmon.app"
@@ -18,7 +33,11 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "VIDEOS_JSON_URL", "\"https://raw.githubusercontent.com/AiErstellung/Testrepo/main/ELMON/APP/pending/videos.json\"")
+        buildConfigField("String", "STORAGE_ENDPOINT", "\"$storageEndpoint\"")
+        buildConfigField("String", "STORAGE_BUCKET", "\"$storageBucket\"")
+        buildConfigField("String", "STORAGE_REGION", "\"$storageRegion\"")
+        buildConfigField("String", "STORAGE_ACCESS_KEY", "\"$storageAccessKey\"")
+        buildConfigField("String", "STORAGE_SECRET_KEY", "\"$storageSecretKey\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -92,4 +111,14 @@ dependencies {
     // Optional / empfohlen
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+kapt {
+    javacOptions {
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
+        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
+    }
 }

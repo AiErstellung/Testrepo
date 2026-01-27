@@ -31,12 +31,12 @@ public final class AppDatabase_Impl extends AppDatabase {
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `VideoRating` (`videoId` TEXT NOT NULL, `liked` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, PRIMARY KEY(`videoId`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `VideoRating` (`videoId` TEXT NOT NULL, `liked` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `feedback` TEXT, PRIMARY KEY(`videoId`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e3ac5dbc5ef00248b97136e88669d3fc')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ef9a16e277c36b1273208386f6c37287')");
       }
 
       @Override
@@ -85,10 +85,11 @@ public final class AppDatabase_Impl extends AppDatabase {
       @NonNull
       public RoomOpenHelper.ValidationResult onValidateSchema(
           @NonNull final SupportSQLiteDatabase db) {
-        final HashMap<String, TableInfo.Column> _columnsVideoRating = new HashMap<String, TableInfo.Column>(3);
+        final HashMap<String, TableInfo.Column> _columnsVideoRating = new HashMap<String, TableInfo.Column>(4);
         _columnsVideoRating.put("videoId", new TableInfo.Column("videoId", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsVideoRating.put("liked", new TableInfo.Column("liked", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsVideoRating.put("timestamp", new TableInfo.Column("timestamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsVideoRating.put("feedback", new TableInfo.Column("feedback", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysVideoRating = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesVideoRating = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoVideoRating = new TableInfo("VideoRating", _columnsVideoRating, _foreignKeysVideoRating, _indicesVideoRating);
@@ -100,7 +101,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "e3ac5dbc5ef00248b97136e88669d3fc", "bb126d50ece5a61ba380cfd5d6584191");
+    }, "ef9a16e277c36b1273208386f6c37287", "574f049329b2df953b531c805dc367eb");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;

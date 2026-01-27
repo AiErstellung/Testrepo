@@ -1,21 +1,29 @@
 # Elmon Video Reviewer
 
-A private, local Android app for two reviewers to stream GitHub-hosted videos in a vertical swipe feed and rate them without any backend.
+A private, local Android app for two reviewers to stream S3-hosted videos in a vertical swipe feed and record why they rejected a clip.
 
 ## Key Features
 - Jetpack Compose UI with a TikTok-style vertical pager.
-- ExoPlayer (Media3) stream playback from raw GitHub URLs.
-- Room database keeps track of like/dislike decisions per video.
+- ExoPlayer (Media3) stream playback from IONOS Object Storage.
+- Room database keeps track of like/dislike decisions per video (feedback is stored too).
 - Videos already rated are removed from the feed and never shown again in the same session.
-- Ratings are persisted locally (one row per video) to support later JSON/CSV exports.
+- Disliking a video opens a short comment dialog; the text is written to `bad/feedback/<videoId>.json` for later exports.
 
 ## Setup
 1. Clone the repository and open it in Android Studio.
-2. Update the VIDEOS_JSON_URL field in pp/build.gradle.kts so it points to your repository's /pending/videos.json (raw.githubusercontent.com).
-3. Build & install via ./gradlew installDebug or run directly from Android Studio.
+2. Define your IONOS Object Storage settings in `ELMON/APP/local.properties` (that file is local-only and must not hold credentials in Git). Add:
+   ```
+   ELMON_STORAGE_ENDPOINT=https://s3.eu-central-3.ionoscloud.com
+   ELMON_STORAGE_BUCKET=buckybucket
+   ELMON_STORAGE_REGION=eu-central-3
+   ELMON_STORAGE_ACCESS_KEY=YOUR_ACCESS_KEY
+   ELMON_STORAGE_SECRET_KEY=YOUR_SECRET_KEY
+   ```
+3. Upload `pending/videos.json` to `pending/videos.json` inside the bucket. Each entry should contain `id`, `title`, `url` (preferably the public S3 URL) and, if the link does not start with `https://<endpoint>/<bucket>/`, include an `s3Key` field with the object path so the app can move it later.
+4. Build & install via `./gradlew installDebug` or run directly from Android Studio.
 
-## Workflow
-- The app fetches ideos.json from /pending/ and only shows videos from that folder.
-- Liking/disliking a video writes a VideoRating to Room and prevents that video from appearing again.
-- After local review, manually move videos in the GitHub repo from /pending/ to /liked/ or /rejected/ and update ideos.json.
-- Exporting rated videos (JSON/CSV) will be added later; the Room table already supports that flow.
+## Storage workflow
+- The app always downloads `pending/videos.json` from the bucket and renders only that list.
+- When you like a video, the app copies the object from `pending/` to `good/` and removes it from the original folder.
+- When you dislike a video, a dialog appears to collect a short comment. The app copies the object into `bad/`, deletes it from `pending/`, and writes your text to `bad/feedback/<videoId>.json`.
+- Keep `pending/videos.json` in sync with the bucket (remove entries after they move) so the feed never re-shows already-reviewed clips.

@@ -6,5 +6,6 @@ import kotlinx.serialization.Serializable
 data class VideoItem(
     val id: String,
     val title: String,
-    val url: String
+    val url: String,
+    val s3Key: String? = null
 )

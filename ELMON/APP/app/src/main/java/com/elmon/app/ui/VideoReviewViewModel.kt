@@ -41,9 +41,9 @@ class VideoReviewViewModel(
         }
     }
 
-    fun rateVideo(video: VideoItem, liked: Boolean) {
+    fun rateVideo(video: VideoItem, liked: Boolean, feedback: String?) {
         viewModelScope.launch {
-            repository.rateVideo(video.id, liked)
+            repository.rateVideo(video, liked, feedback)
             ratedIds.add(video.id)
             updateState()
         }

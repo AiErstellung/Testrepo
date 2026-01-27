@@ -39,7 +39,7 @@ public final class VideoRatingDao_Impl implements VideoRatingDao {
       @Override
       @NonNull
       protected String createQuery() {
-        return "INSERT OR REPLACE INTO `VideoRating` (`videoId`,`liked`,`timestamp`) VALUES (?,?,?)";
+        return "INSERT OR REPLACE INTO `VideoRating` (`videoId`,`liked`,`timestamp`,`feedback`) VALUES (?,?,?,?)";
       }
 
       @Override
@@ -53,6 +53,11 @@ public final class VideoRatingDao_Impl implements VideoRatingDao {
         final int _tmp = entity.getLiked() ? 1 : 0;
         statement.bindLong(2, _tmp);
         statement.bindLong(3, entity.getTimestamp());
+        if (entity.getFeedback() == null) {
+          statement.bindNull(4);
+        } else {
+          statement.bindString(4, entity.getFeedback());
+        }
       }
     };
   }
@@ -119,6 +124,7 @@ public final class VideoRatingDao_Impl implements VideoRatingDao {
           final int _cursorIndexOfVideoId = CursorUtil.getColumnIndexOrThrow(_cursor, "videoId");
           final int _cursorIndexOfLiked = CursorUtil.getColumnIndexOrThrow(_cursor, "liked");
           final int _cursorIndexOfTimestamp = CursorUtil.getColumnIndexOrThrow(_cursor, "timestamp");
+          final int _cursorIndexOfFeedback = CursorUtil.getColumnIndexOrThrow(_cursor, "feedback");
           final List<VideoRating> _result = new ArrayList<VideoRating>(_cursor.getCount());
           while (_cursor.moveToNext()) {
             final VideoRating _item;
@@ -134,7 +140,13 @@ public final class VideoRatingDao_Impl implements VideoRatingDao {
             _tmpLiked = _tmp != 0;
             final long _tmpTimestamp;
             _tmpTimestamp = _cursor.getLong(_cursorIndexOfTimestamp);
-            _item = new VideoRating(_tmpVideoId,_tmpLiked,_tmpTimestamp);
+            final String _tmpFeedback;
+            if (_cursor.isNull(_cursorIndexOfFeedback)) {
+              _tmpFeedback = null;
+            } else {
+              _tmpFeedback = _cursor.getString(_cursorIndexOfFeedback);
+            }
+            _item = new VideoRating(_tmpVideoId,_tmpLiked,_tmpTimestamp,_tmpFeedback);
             _result.add(_item);
           }
           return _result;
