@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.elmon.app-mergeDebugResources-66:/values-bg/values-bg.xml",
+            "outputFile": "com.elmon.app-mergeDebugResources-62:/values-bg/values-bg.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Steffen\\.gradle\\caches\\8.14.4\\transforms\\d82872dcb82472fffcf8c81396674e34\\transformed\\jetified-media3-ui-1.1.1\\res\\values-bg\\values-bg.xml",

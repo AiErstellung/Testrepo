@@ -18,12 +18,12 @@ A private, local Android app for two reviewers to stream S3-hosted videos in a v
    ELMON_STORAGE_REGION=eu-central-3
    ELMON_STORAGE_ACCESS_KEY=YOUR_ACCESS_KEY
    ELMON_STORAGE_SECRET_KEY=YOUR_SECRET_KEY
+   ELMON_STORAGE_SESSION_TOKEN=YOUR_SESSION_TOKEN   # optional for temporary credentials
    ```
-3. Upload `pending/videos.json` to `pending/videos.json` inside the bucket. Each entry should contain `id`, `title`, `url` (preferably the public S3 URL) and, if the link does not start with `https://<endpoint>/<bucket>/`, include an `s3Key` field with the object path so the app can move it later.
+3. Upload `pending/videos.json` to `pending/videos.json` inside the bucket. Each entry should contain `id`, `title`, `url` (preferably the public S3 URL). The app now keeps every clip’s `liked`/`feedback` state in this file (null/absent = pending); it will automatically append those fields so you do not need a local database.
 4. Build & install via `./gradlew installDebug` or run directly from Android Studio.
 
 ## Storage workflow
-- The app always downloads `pending/videos.json` from the bucket and renders only that list.
-- When you like a video, the app copies the object from `pending/` to `good/` and removes it from the original folder.
-- When you dislike a video, a dialog appears to collect a short comment. The app copies the object into `bad/`, deletes it from `pending/`, and writes your text to `bad/feedback/<videoId>.json`.
-- Keep `pending/videos.json` in sync with the bucket (remove entries after they move) so the feed never re-shows already-reviewed clips.
+- The app always downloads `pending/videos.json` from the bucket, filters out entries whose `liked` flag is already set, and renders the remaining clips.
+- When you rate a video, the app updates the corresponding entry in `pending/videos.json` with `liked: true`/`false` and, for dislikes, a `feedback` string. That keeps the stream state in one place instead of a local database.
+- Keep `pending/videos.json` in sync with the bucket (remove entries once you no longer need the clip) so the feed never re-shows already-reviewed clips, and let the app handle that metadata automatically.

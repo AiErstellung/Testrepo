@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.elmon.app-mergeDebugResources-66:/values-uk/values-uk.xml",
+            "outputFile": "com.elmon.app-mergeDebugResources-62:/values-uk/values-uk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Steffen\\.gradle\\caches\\8.14.4\\transforms\\32f5382a49f6d341cc07f3e6a52aab73\\transformed\\jetified-foundation-release\\res\\values-uk\\values-uk.xml",

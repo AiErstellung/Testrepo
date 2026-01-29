@@ -41,7 +41,15 @@ fun VideoPlayer(
         factory = { ctx ->
             PlayerView(ctx).apply {
                 player = exoPlayer
-                useController = false
+                useController = true
+                controllerAutoShow = true
+                setShowBuffering(PlayerView.SHOW_BUFFERING_WHEN_PLAYING)
+                setShowRewindButton(true)
+                setShowFastForwardButton(true)
+                setShowNextButton(false)
+                setShowPreviousButton(false)
+                setShowShuffleButton(false)
+                setShowSubtitleButton(true)
                 layoutParams = FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT,
                     FrameLayout.LayoutParams.MATCH_PARENT

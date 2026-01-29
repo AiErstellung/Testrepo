@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -42,9 +46,11 @@ import kotlinx.coroutines.launch
 fun VideoReviewApp(viewModel: VideoReviewViewModel) {
     val uiState by viewModel.state.collectAsState()
     val pagerState = rememberPagerState(pageCount = { uiState.videos.size })
+    val reviewedPagerState = rememberPagerState(pageCount = { uiState.ratedVideos.size })
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
+    var showReviewed by rememberSaveable { mutableStateOf(false) }
     var pendingFeedbackVideo by remember { mutableStateOf<VideoItem?>(null) }
     var pendingFeedbackPage by remember { mutableStateOf(0) }
 
@@ -71,9 +77,44 @@ fun VideoReviewApp(viewModel: VideoReviewViewModel) {
         }
     }
 
+    LaunchedEffect(uiState.ratedVideos.size) {
+        if (uiState.ratedVideos.isNotEmpty() && reviewedPagerState.currentPage >= uiState.ratedVideos.size) {
+            reviewedPagerState.scrollToPage(uiState.ratedVideos.lastIndex)
+        }
+    }
+
+    LaunchedEffect(showReviewed) {
+        if (showReviewed) {
+            viewModel.loadRatedVideos()
+        }
+    }
+
     Scaffold(
         topBar = {
-            SmallTopAppBar(title = { Text(stringResource(R.string.app_name)) })
+            SmallTopAppBar(
+                title = {
+                    Text(
+                        if (showReviewed) "Reviewed videos" else stringResource(R.string.app_name)
+                    )
+                },
+                navigationIcon = {
+                    if (showReviewed) {
+                        IconButton(onClick = { showReviewed = false }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                },
+                actions = {
+                    if (!showReviewed) {
+                        TextButton(onClick = { showReviewed = true }) {
+                            Text("Reviewed")
+                        }
+                    }
+                }
+            )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
@@ -82,50 +123,75 @@ fun VideoReviewApp(viewModel: VideoReviewViewModel) {
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            when {
-                uiState.isLoading -> {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                }
-                uiState.videos.isEmpty() -> {
-                    Column(
-                        modifier = Modifier.align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
+            if (showReviewed) {
+                when {
+                    uiState.isLoadingRatedVideos -> {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    }
+                    uiState.ratedVideos.isEmpty() -> {
                         Text(
-                            text = stringResource(R.string.no_videos),
-                            textAlign = TextAlign.Center,
+                            text = "No reviewed videos yet.",
+                            modifier = Modifier.align(Alignment.Center),
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        Text(
-                            text = "Pull to refresh",
-                            style = MaterialTheme.typography.bodySmall
+                    }
+                    else -> {
+                        VideoFeed(
+                            videos = uiState.ratedVideos,
+                            pagerState = reviewedPagerState,
+                            onLike = { _, _ -> },
+                            onDislike = { _, _ -> },
+                            showRatingControls = false,
+                            showFeedback = true
                         )
                     }
                 }
-                else -> {
-                    VideoFeed(
-                        videos = uiState.videos,
-                        pagerState = pagerState,
-                        onLike = { video, page ->
-                            handleRating(video, true, page, null)
-                        },
-                        onDislike = { video, page ->
-                            pendingFeedbackVideo = video
-                            pendingFeedbackPage = page
+            } else {
+                when {
+                    uiState.isLoading -> {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    }
+                    uiState.videos.isEmpty() -> {
+                        Column(
+                            modifier = Modifier.align(Alignment.Center),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.no_videos),
+                                textAlign = TextAlign.Center,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = "Pull to refresh",
+                                style = MaterialTheme.typography.bodySmall
+                            )
+                        }
+                    }
+                    else -> {
+                        VideoFeed(
+                            videos = uiState.videos,
+                            pagerState = pagerState,
+                            onLike = { video, page ->
+                                handleRating(video, true, page, null)
+                            },
+                            onDislike = { video, page ->
+                                pendingFeedbackVideo = video
+                                pendingFeedbackPage = page
+                            }
+                        )
+                    }
+                }
+                pendingFeedbackVideo?.let { video ->
+                    BadFeedbackDialog(
+                        video = video,
+                        onDismiss = { pendingFeedbackVideo = null },
+                        onSubmit = { comment ->
+                            handleRating(video, false, pendingFeedbackPage, comment)
+                            pendingFeedbackVideo = null
                         }
                     )
                 }
-            }
-            pendingFeedbackVideo?.let { video ->
-                BadFeedbackDialog(
-                    video = video,
-                    onDismiss = { pendingFeedbackVideo = null },
-                    onSubmit = { comment ->
-                        handleRating(video, false, pendingFeedbackPage, comment)
-                        pendingFeedbackVideo = null
-                    }
-                )
             }
         }
     }

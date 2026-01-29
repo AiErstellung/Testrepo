@@ -17,7 +17,6 @@ class VideoReviewViewModel(
     val state: StateFlow<VideoFeedState> = _state.asStateFlow()
 
     private var allVideos: List<VideoItem> = emptyList()
-    private val ratedIds = mutableSetOf<String>()
 
     init {
         refresh()
@@ -25,36 +24,69 @@ class VideoReviewViewModel(
 
     fun refresh() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true, error = null)
-            try {
-                val fetched = repository.fetchPendingVideos()
-                allVideos = fetched
-                ratedIds.clear()
-                ratedIds.addAll(repository.getRatedIds())
-                updateState()
-            } catch (t: Throwable) {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = t.message ?: "Unable to load videos"
-                )
-            }
+            loadPendingVideos()
         }
     }
 
     fun rateVideo(video: VideoItem, liked: Boolean, feedback: String?) {
         viewModelScope.launch {
-            repository.rateVideo(video, liked, feedback)
-            ratedIds.add(video.id)
+            try {
+                repository.rateVideo(video, liked, feedback)
+                loadPendingVideos()
+                loadRatedVideosInternal()
+            } catch (t: Throwable) {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    error = t.message ?: "Unable to submit rating"
+                )
+            }
+        }
+    }
+
+    fun clearError() {
+        _state.value = _state.value.copy(error = null)
+    }
+
+    private suspend fun loadPendingVideos() {
+        _state.value = _state.value.copy(isLoading = true, error = null)
+        try {
+            allVideos = repository.fetchPendingVideos()
             updateState()
+        } catch (t: Throwable) {
+            _state.value = _state.value.copy(
+                isLoading = false,
+                error = t.message ?: "Unable to load videos"
+            )
+        }
+    }
+
+    fun loadRatedVideos() {
+        viewModelScope.launch {
+            loadRatedVideosInternal()
+        }
+    }
+
+    private suspend fun loadRatedVideosInternal() {
+        _state.value = _state.value.copy(isLoadingRatedVideos = true, error = null)
+        try {
+            val rated = repository.fetchRatedVideos()
+            _state.value = _state.value.copy(
+                isLoadingRatedVideos = false,
+                ratedVideos = rated
+            )
+        } catch (t: Throwable) {
+            _state.value = _state.value.copy(
+                isLoadingRatedVideos = false,
+                error = t.message ?: "Unable to load rated videos"
+            )
         }
     }
 
     private fun updateState() {
-        val filtered = allVideos.filter { it.id !in ratedIds }
-        _state.value = VideoFeedState(
+        _state.value = _state.value.copy(
             isLoading = false,
             error = null,
-            videos = filtered
+            videos = allVideos.filter { it.liked == null }
         )
     }
 }
@@ -73,6 +105,8 @@ class VideoReviewViewModelFactory(
 
 data class VideoFeedState(
     val isLoading: Boolean = false,
+    val isLoadingRatedVideos: Boolean = false,
     val error: String? = null,
-    val videos: List<VideoItem> = emptyList()
+    val videos: List<VideoItem> = emptyList(),
+    val ratedVideos: List<VideoItem> = emptyList()
 )

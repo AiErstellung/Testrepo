@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.elmon.app.data.model.VideoItem
@@ -28,6 +27,8 @@ fun VideoFeed(
     pagerState: PagerState,
     onLike: (VideoItem, Int) -> Unit,
     onDislike: (VideoItem, Int) -> Unit,
+    showRatingControls: Boolean = true,
+    showFeedback: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     VerticalPager(
@@ -64,19 +65,36 @@ fun VideoFeed(
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.White
                     )
+                    if (showFeedback && video.liked != null) {
+                        val ratingText = if (video.liked == true) "Liked" else "Disliked"
+                        Text(
+                            text = ratingText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.White
+                        )
+                    }
+                    if (showFeedback && video.liked == false) {
+                        Text(
+                            text = "Feedback: ${video.feedback ?: "None"}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White
+                        )
+                    }
                 }
             }
 
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 32.dp)
-            ) {
-                RatingControls(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    onLike = { onLike(video, page) },
-                    onDislike = { onDislike(video, page) }
-                )
+            if (showRatingControls) {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 96.dp)
+                ) {
+                    RatingControls(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        onLike = { onLike(video, page) },
+                        onDislike = { onDislike(video, page) }
+                    )
+                }
             }
         }
     }

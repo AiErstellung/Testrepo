@@ -71,12 +71,8 @@ MERGED from [androidx.lifecycle:lifecycle-runtime:2.6.2] C:\Users\Steffen\.gradl
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\58446fbd1128474a2e5b51e46b5263cb\transformed\lifecycle-viewmodel-2.6.2\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\d639d862ffc71235966a71a718bf99c9\transformed\jetified-lifecycle-viewmodel-compose-2.6.2\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\57ce56fc9b980d20bc7e8a38e87392bd\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:17:1-31:12
-MERGED from [androidx.room:room-ktx:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dbb23669f44a06f0c5176f62676346f9\transformed\jetified-room-ktx-2.6.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dfad3d5c431444d3bddc419f4a952ecb\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\d0de0a1be71579d2b1b4862ab4472b47\transformed\jetified-runtime-release\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\c8aea98057cfeabb9122657541e2a27c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\10114844c7d90d3cdde446fd85c1d834\transformed\sqlite-2.4.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\b204d4a1bf53bc12c9635254b46d9b91\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\75da87c4f6eaf5e23225e372f78936b9\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\35926c6f7d9e5bcc772adaaaa4fcd49c\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -120,8 +116,6 @@ MERGED from [androidx.window:window:1.0.0] C:\Users\Steffen\.gradle\caches\8.14.
 MERGED from [androidx.window:window:1.0.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\9d099518f33a15785e66769cb7dde40e\transformed\jetified-window-1.0.0\AndroidManifest.xml:24:5-31:19
 MERGED from [androidx.core:core:1.13.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\6af8d60d607d2b05d6b0a6f7fea55266\transformed\core-1.13.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.core:core:1.13.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\6af8d60d607d2b05d6b0a6f7fea55266\transformed\core-1.13.0\AndroidManifest.xml:28:5-89
-MERGED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:23:5-29:19
-MERGED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:23:5-29:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\75da87c4f6eaf5e23225e372f78936b9\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\75da87c4f6eaf5e23225e372f78936b9\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\ac69fe869ee7e68850763e11e477dc87\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
@@ -298,18 +292,10 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\Stef
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\d639d862ffc71235966a71a718bf99c9\transformed\jetified-lifecycle-viewmodel-compose-2.6.2\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\57ce56fc9b980d20bc7e8a38e87392bd\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.6.2] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\57ce56fc9b980d20bc7e8a38e87392bd\transformed\jetified-lifecycle-runtime-ktx-2.6.2\AndroidManifest.xml:20:5-44
-MERGED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:21:5-44
-MERGED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:21:5-44
-MERGED from [androidx.room:room-ktx:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dbb23669f44a06f0c5176f62676346f9\transformed\jetified-room-ktx-2.6.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.room:room-ktx:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dbb23669f44a06f0c5176f62676346f9\transformed\jetified-room-ktx-2.6.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dfad3d5c431444d3bddc419f4a952ecb\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\dfad3d5c431444d3bddc419f4a952ecb\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\d0de0a1be71579d2b1b4862ab4472b47\transformed\jetified-runtime-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.compose.runtime:runtime-android:1.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\d0de0a1be71579d2b1b4862ab4472b47\transformed\jetified-runtime-release\AndroidManifest.xml:5:5-44
-MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\c8aea98057cfeabb9122657541e2a27c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\c8aea98057cfeabb9122657541e2a27c\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\10114844c7d90d3cdde446fd85c1d834\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44
-MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\10114844c7d90d3cdde446fd85c1d834\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\b204d4a1bf53bc12c9635254b46d9b91\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\b204d4a1bf53bc12c9635254b46d9b91\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\75da87c4f6eaf5e23225e372f78936b9\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
@@ -416,16 +402,6 @@ uses-permission#com.elmon.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.13.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\6af8d60d607d2b05d6b0a6f7fea55266\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.13.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\6af8d60d607d2b05d6b0a6f7fea55266\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
-service#androidx.room.MultiInstanceInvalidationService
-ADDED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:24:9-28:63
-	android:exported
-		ADDED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:27:13-37
-	tools:ignore
-		ADDED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:28:13-60
-	android:directBootAware
-		ADDED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:26:13-43
-	android:name
-		ADDED from [androidx.room:room-runtime:2.6.0] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\0a59cffd017206b8271071a3c767a120\transformed\room-runtime-2.6.0\AndroidManifest.xml:25:13-74
 meta-data#androidx.profileinstaller.ProfileInstallerInitializer
 ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Steffen\.gradle\caches\8.14.4\transforms\ac69fe869ee7e68850763e11e477dc87\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
 	android:value

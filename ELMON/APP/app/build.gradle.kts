@@ -4,7 +4,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 val composeUiVersion = "1.5.3"
@@ -17,11 +16,15 @@ fun requireLocalProperty(key: String) =
     localProperties[key]?.toString()?.takeIf { it.isNotBlank() }
         ?: error("$key must be defined in local.properties (and kept out of Git)")
 
+fun optionalLocalProperty(key: String): String? =
+    localProperties[key]?.toString()?.takeIf { it.isNotBlank() }
+
 val storageEndpoint = requireLocalProperty("ELMON_STORAGE_ENDPOINT")
 val storageBucket = requireLocalProperty("ELMON_STORAGE_BUCKET")
 val storageRegion = requireLocalProperty("ELMON_STORAGE_REGION")
 val storageAccessKey = requireLocalProperty("ELMON_STORAGE_ACCESS_KEY")
 val storageSecretKey = requireLocalProperty("ELMON_STORAGE_SECRET_KEY")
+val storageSessionToken = optionalLocalProperty("ELMON_STORAGE_SESSION_TOKEN")
 
 android {
     namespace = "com.elmon.app"
@@ -38,6 +41,11 @@ android {
         buildConfigField("String", "STORAGE_REGION", "\"$storageRegion\"")
         buildConfigField("String", "STORAGE_ACCESS_KEY", "\"$storageAccessKey\"")
         buildConfigField("String", "STORAGE_SECRET_KEY", "\"$storageSecretKey\"")
+        buildConfigField(
+            "String",
+            "STORAGE_SESSION_TOKEN",
+            storageSessionToken?.let { "\"$it\"" } ?: "null"
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -104,21 +112,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    implementation("androidx.room:room-runtime:2.6.0")
-    implementation("androidx.room:room-ktx:2.6.0")
-    kapt("androidx.room:room-compiler:2.6.0")
-
     // Optional / empfohlen
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
 
-kapt {
-    javacOptions {
-        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED")
-        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED")
-        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED")
-        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED")
-        option("-J--add-exports=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED")
-    }
-}

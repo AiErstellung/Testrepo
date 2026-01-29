@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.elmon.app.data.db.AppDatabase
 import com.elmon.app.repository.S3Storage
 import com.elmon.app.repository.VideoRepository
 import com.elmon.app.ui.theme.ElmonVideoReviewerTheme
@@ -23,15 +22,13 @@ class MainActivity : ComponentActivity() {
             BuildConfig.STORAGE_REGION,
             BuildConfig.STORAGE_ACCESS_KEY,
             BuildConfig.STORAGE_SECRET_KEY,
+            BuildConfig.STORAGE_SESSION_TOKEN,
             httpClient
         )
     }
 
     private val repository by lazy {
-        VideoRepository(
-            storage,
-            AppDatabase.getInstance(this).videoRatingDao()
-        )
+        VideoRepository(storage)
     }
 
     private val viewModel: VideoReviewViewModel by viewModels {

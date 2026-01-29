@@ -19,4 +19,6 @@ public final class BuildConfig {
   public static final String STORAGE_REGION = "eu-central-3";
   // Field from default config.
   public static final String STORAGE_SECRET_KEY = "i01MX/AkQbJ2Ew9TqRHTbuQXTbnfHBN9xMT6J9Dhsqk+9yu9PsLNlJ/jFzy5xDl9";
+  // Field from default config.
+  public static final String STORAGE_SESSION_TOKEN = null;
 }

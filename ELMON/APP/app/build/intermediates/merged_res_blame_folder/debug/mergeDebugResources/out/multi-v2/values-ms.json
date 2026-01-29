@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.elmon.app-mergeDebugResources-66:/values-ms/values-ms.xml",
+            "outputFile": "com.elmon.app-mergeDebugResources-62:/values-ms/values-ms.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Steffen\\.gradle\\caches\\8.14.4\\transforms\\6af8d60d607d2b05d6b0a6f7fea55266\\transformed\\core-1.13.0\\res\\values-ms\\values-ms.xml",

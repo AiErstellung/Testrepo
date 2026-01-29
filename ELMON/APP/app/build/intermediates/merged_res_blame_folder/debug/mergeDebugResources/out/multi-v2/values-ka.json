@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.elmon.app-mergeDebugResources-66:/values-ka/values-ka.xml",
+            "outputFile": "com.elmon.app-mergeDebugResources-62:/values-ka/values-ka.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Steffen\\.gradle\\caches\\8.14.4\\transforms\\dcd3691cf788f44b12a96c67893ab2b2\\transformed\\jetified-media3-exoplayer-1.1.1\\res\\values-ka\\values-ka.xml",

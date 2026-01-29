@@ -7,5 +7,8 @@ data class VideoItem(
     val id: String,
     val title: String,
     val url: String,
-    val s3Key: String? = null
+    val s3Key: String? = null,
+    val liked: Boolean? = null,
+    val feedback: String? = null,
+    val ratedAt: Long? = null
 )

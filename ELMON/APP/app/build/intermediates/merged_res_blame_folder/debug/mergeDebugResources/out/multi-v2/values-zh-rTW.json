@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.elmon.app-mergeDebugResources-66:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.elmon.app-mergeDebugResources-62:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Steffen\\.gradle\\caches\\8.14.4\\transforms\\f23e96c7ed9858af4b14bcae4f6a0e4a\\transformed\\jetified-material3-release\\res\\values-zh-rTW\\values-zh-rTW.xml",
