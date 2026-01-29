@@ -2,6 +2,7 @@ package com.elmon.app.repository
 
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -43,6 +44,23 @@ class S3Storage(
     fun presignGetObject(key: String, expiresInSeconds: Long = 300): String {
         val url = urlForKey(key)
         return signer.presign("GET", url, expiresInSeconds).toString()
+    }
+
+    fun maybeExtractKey(url: String?): String? {
+        val candidate = url?.trim().orEmpty()
+        if (candidate.isBlank()) return null
+        val parsed = candidate.toHttpUrlOrNull() ?: return null
+        if (parsed.scheme != bucketBaseUrl.scheme ||
+            parsed.host != bucketBaseUrl.host ||
+            parsed.port != bucketBaseUrl.port
+        ) {
+            return null
+        }
+        val bucketPath = bucketBaseUrl.encodedPath.trimEnd('/')
+        val fullPath = parsed.encodedPath
+        if (!fullPath.startsWith(bucketPath)) return null
+        val key = fullPath.removePrefix(bucketPath).trimStart('/')
+        return key.ifBlank { null }
     }
 
     fun readObject(key: String): ByteArray {

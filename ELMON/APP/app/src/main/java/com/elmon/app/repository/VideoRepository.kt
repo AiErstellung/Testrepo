@@ -64,7 +64,8 @@ class VideoRepository(
     private fun addPlaybackUrls(videos: List<VideoItem>): List<VideoItem> {
         if (videos.isEmpty()) return videos
         return videos.map { video ->
-            val key = video.s3Key?.trim()
+            val key = video.s3Key?.trim()?.takeIf { it.isNotBlank() }
+                ?: storage.maybeExtractKey(video.url)
             if (key.isNullOrBlank()) {
                 video
             } else {
