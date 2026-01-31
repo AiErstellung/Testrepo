@@ -1,0 +1,204 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "KRIETA Video Layout Schema",
+  "type": "object",
+  "required": ["krieta_version", "canvas", "layout"],
+  "properties": {
+    "krieta_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+
+    "canvas": {
+      "$ref": "#/definitions/canvas"
+    },
+
+    "layout": {
+      "$ref": "#/definitions/layout"
+    },
+
+    "overlays": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/overlay" }
+    },
+
+    "timing": {
+      "$ref": "#/definitions/timing"
+    },
+
+    "platform": {
+      "$ref": "#/definitions/platform"
+    }
+  },
+
+  "definitions": {
+    "canvas": {
+      "type": "object",
+      "required": ["aspect_ratio"],
+      "properties": {
+        "aspect_ratio": {
+          "type": "string",
+          "enum": ["9:16", "1:1", "16:9"]
+        },
+        "resolution": {
+          "type": "string",
+          "pattern": "^\\d+x\\d+$"
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 60
+        }
+      }
+    },
+
+    "layout": {
+      "type": "object",
+      "required": ["zones"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["freeform", "vertical_split", "horizontal_split", "pip"]
+        },
+        "zones": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/zone" }
+        }
+      }
+    },
+
+    "zone": {
+      "type": "object",
+      "required": ["id", "source", "position", "size"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "description": "Abstract content slot (e.g. video_1)"
+        },
+        "asset_url": {
+          "type": "string",
+          "description": "Direct video asset URL for this zone"
+        },
+        "asset_key": {
+          "type": "string",
+          "description": "Bucket key/path for the asset (e.g. Assets/sample.mp4)"
+        },
+        "position": {
+          "$ref": "#/definitions/position"
+        },
+        "size": {
+          "$ref": "#/definitions/size"
+        },
+        "z_index": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    },
+
+    "position": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": {
+          "type": "string",
+          "pattern": "^\\d+%$"
+        },
+        "y": {
+          "type": "string",
+          "pattern": "^\\d+%$"
+        }
+      }
+    },
+
+    "size": {
+      "type": "object",
+      "required": ["width", "height"],
+      "properties": {
+        "width": {
+          "type": "string",
+          "pattern": "^\\d+%$"
+        },
+        "height": {
+          "type": "string",
+          "pattern": "^\\d+%$"
+        }
+      }
+    },
+
+    "overlay": {
+      "type": "object",
+      "required": ["id", "type", "position"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["text", "top_list", "subtitles"]
+        },
+        "position": {
+          "$ref": "#/definitions/position"
+        },
+        "max_width": {
+          "type": "string",
+          "pattern": "^\\d+%$"
+        },
+        "style": {
+          "$ref": "#/definitions/textStyle"
+        },
+        "animation": {
+          "$ref": "#/definitions/animation"
+        }
+      }
+    },
+
+    "textStyle": {
+      "type": "object",
+      "properties": {
+        "font": { "type": "string" },
+        "font_size": { "type": "integer" },
+        "color": { "type": "string" },
+        "background": { "type": "string" },
+        "outline": { "type": "string" },
+        "padding": { "type": "integer" }
+      }
+    },
+
+    "animation": {
+      "type": "object",
+      "properties": {
+        "in": { "type": "string" },
+        "out": { "type": "string" }
+      }
+    },
+
+    "timing": {
+      "type": "object",
+      "properties": {
+        "min_scene_length": { "type": "number" },
+        "max_scene_length": { "type": "number" },
+        "cut_on_beat": { "type": "boolean" }
+      }
+    },
+
+    "platform": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "type": "string",
+          "enum": ["tiktok", "instagram", "youtube_shorts"]
+        },
+        "safe_zones": {
+          "type": "object",
+          "properties": {
+            "top": { "type": "string" },
+            "bottom": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

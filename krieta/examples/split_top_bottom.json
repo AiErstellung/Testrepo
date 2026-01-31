@@ -1,0 +1,63 @@
+﻿{
+  "krieta_version": "1.0",
+  "canvas": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "fps": 30
+  },
+  "layout": {
+    "type": "vertical_split",
+    "zones": [
+      {
+        "id": "top_zone",
+        "source": "video_1",
+        "position": { "x": "0%", "y": "0%" },
+        "size": { "width": "100%", "height": "50%" }
+      },
+      {
+        "id": "bottom_zone",
+        "source": "video_2",
+        "position": { "x": "0%", "y": "50%" },
+        "size": { "width": "100%", "height": "50%" }
+      }
+    ]
+  },
+  "overlays": [
+    {
+      "id": "hook_text",
+      "type": "text",
+      "position": { "x": "5%", "y": "5%" },
+      "max_width": "90%",
+      "style": {
+        "font": "Inter-Bold",
+        "font_size": 64,
+        "color": "#FFFFFF",
+        "background": "rgba(0,0,0,0.4)",
+        "padding": 16
+      },
+      "animation": {
+        "in": "slide_down",
+        "out": "fade"
+      }
+    },
+    {
+      "id": "subtitles",
+      "type": "subtitles",
+      "position": { "x": "5%", "y": "85%" },
+      "max_width": "90%",
+      "style": {
+        "font": "Inter-SemiBold",
+        "font_size": 48,
+        "color": "#FFFFFF",
+        "outline": "#000000"
+      }
+    }
+  ],
+  "platform": {
+    "target": "tiktok",
+    "safe_zones": {
+      "top": "10%",
+      "bottom": "15%"
+    }
+  }
+}

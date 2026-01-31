@@ -1,0 +1,13 @@
+{
+  "items": [
+    {
+      "key": "Assets/sample-15s.mp4",
+      "name": "sample-15s.mp4",
+      "localPath": "E:\\Testrepo\\tools\\upload-bridge\\assets-cache\\sample-15s.mp4",
+      "relativePath": "sample-15s.mp4",
+      "url": "http://localhost:5178/assets/cache/sample-15s.mp4",
+      "size": 11916526,
+      "lastModified": "2026-01-30T21:20:09.674Z"
+    }
+  ]
+}

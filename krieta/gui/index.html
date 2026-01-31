@@ -1,0 +1,232 @@
+﻿<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KRIETA Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">K</div>
+          <div>
+            <div class="brand-title">KRIETA Builder</div>
+            <div class="brand-note">Layout-Baukasten v1</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Formate</h2>
+            <button id="add-format" class="btn btn-primary">+ Neu</button>
+          </div>
+          <ul id="format-list" class="format-list"></ul>
+        </div>
+
+        <div class="panel">
+          <h2>Aktionen</h2>
+          <button id="duplicate-format" class="btn">Duplizieren</button>
+          <button id="delete-format" class="btn btn-danger">Löschen</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Assets</h2>
+            <button id="refresh-assets" class="btn">Reload</button>
+          </div>
+          <div class="field">
+            <label for="asset-search">Suche</label>
+            <input id="asset-search" type="text" placeholder="video_name.mp4" />
+          </div>
+          <div class="asset-hint">Drag & drop in eine Zone oder klicken</div>
+          <div id="asset-list" class="asset-list"></div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <section class="canvas-panel">
+          <div class="canvas-header">
+            <div>
+              <h1 id="format-title">Format</h1>
+              <p id="format-subtitle">Canvas Vorschau</p>
+            </div>
+            <div class="canvas-actions">
+              <button id="add-zone" class="btn">+ Zone</button>
+              <button id="add-overlay" class="btn">+ Overlay</button>
+            </div>
+          </div>
+
+          <div class="canvas-frame">
+            <div id="canvas" class="canvas">
+              <div class="canvas-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="inspector">
+          <div class="tabs">
+            <button class="tab active" data-tab="canvas">Canvas</button>
+            <button class="tab" data-tab="layout">Layout</button>
+            <button class="tab" data-tab="zone">Zone</button>
+            <button class="tab" data-tab="overlay">Overlay</button>
+            <button class="tab" data-tab="json">JSON</button>
+          </div>
+
+          <div class="tab-content active" id="tab-canvas">
+            <div class="field">
+              <label for="canvas-aspect">Aspect Ratio</label>
+              <select id="canvas-aspect">
+                <option value="9:16">9:16</option>
+                <option value="1:1">1:1</option>
+                <option value="16:9">16:9</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="canvas-resolution">Auflösung</label>
+              <input id="canvas-resolution" type="text" placeholder="1080x1920" />
+            </div>
+            <div class="field">
+              <label for="canvas-fps">FPS</label>
+              <input id="canvas-fps" type="number" min="24" max="60" />
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-layout">
+            <div class="field">
+              <label for="layout-type">Layout-Typ</label>
+              <select id="layout-type">
+                <option value="freeform">Freeform</option>
+                <option value="vertical_split">Vertical Split</option>
+                <option value="horizontal_split">Horizontal Split</option>
+                <option value="pip">PiP</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="layout-name">Titel</label>
+              <input id="layout-name" type="text" />
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-zone">
+            <div class="field">
+              <label for="zone-id">Zone ID</label>
+              <input id="zone-id" type="text" />
+            </div>
+            <div class="field">
+              <label for="zone-source">Source Slot</label>
+              <input id="zone-source" type="text" placeholder="video_1" />
+            </div>
+            <div class="field grid-2">
+              <div>
+                <label for="zone-x">X %</label>
+                <input id="zone-x" type="number" min="0" max="100" />
+              </div>
+              <div>
+                <label for="zone-y">Y %</label>
+                <input id="zone-y" type="number" min="0" max="100" />
+              </div>
+            </div>
+            <div class="field grid-2">
+              <div>
+                <label for="zone-w">Breite %</label>
+                <input id="zone-w" type="number" min="1" max="100" />
+              </div>
+              <div>
+                <label for="zone-h">Höhe %</label>
+                <input id="zone-h" type="number" min="1" max="100" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="zone-z">Z-Index</label>
+              <input id="zone-z" type="number" />
+            </div>
+            <div class="field">
+              <label for="zone-asset">Asset URL</label>
+              <input id="zone-asset" type="text" placeholder="https://..." />
+            </div>
+            <div class="field">
+              <label for="zone-asset-key">Bucket Pfad</label>
+              <input id="zone-asset-key" type="text" placeholder="Assets/..." />
+            </div>
+            <div class="asset-preview">
+              <video id="zone-asset-preview" controls></video>
+            </div>
+            <button id="delete-zone" class="btn btn-danger">Zone löschen</button>
+          </div>
+
+          <div class="tab-content" id="tab-overlay">
+            <div class="field">
+              <label for="overlay-id">Overlay ID</label>
+              <input id="overlay-id" type="text" />
+            </div>
+            <div class="field">
+              <label for="overlay-type">Typ</label>
+              <select id="overlay-type">
+                <option value="text">Text</option>
+                <option value="top_list">Top List</option>
+                <option value="subtitles">Subtitles</option>
+              </select>
+            </div>
+            <div class="field grid-2">
+              <div>
+                <label for="overlay-x">X %</label>
+                <input id="overlay-x" type="number" min="0" max="100" />
+              </div>
+              <div>
+                <label for="overlay-y">Y %</label>
+                <input id="overlay-y" type="number" min="0" max="100" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="overlay-width">Max Breite %</label>
+              <input id="overlay-width" type="number" min="1" max="100" />
+            </div>
+            <div class="field grid-2">
+              <div>
+                <label for="overlay-font">Font</label>
+                <input id="overlay-font" type="text" />
+              </div>
+              <div>
+                <label for="overlay-size">Font Size</label>
+                <input id="overlay-size" type="number" />
+              </div>
+            </div>
+            <div class="field grid-2">
+              <div>
+                <label for="overlay-color">Color</label>
+                <input id="overlay-color" type="text" />
+              </div>
+              <div>
+                <label for="overlay-outline">Outline</label>
+                <input id="overlay-outline" type="text" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="overlay-bg">Background</label>
+              <input id="overlay-bg" type="text" />
+            </div>
+            <button id="delete-overlay" class="btn btn-danger">Overlay löschen</button>
+          </div>
+
+          <div class="tab-content" id="tab-json">
+            <div class="field">
+              <label for="json-output">JSON</label>
+              <textarea id="json-output" rows="12"></textarea>
+            </div>
+            <div class="json-actions">
+              <button id="copy-json" class="btn">Kopieren</button>
+              <button id="import-json" class="btn">Importieren</button>
+              <button id="export-s3" class="btn btn-primary">Export JSON</button>
+              <button id="upload-ionos" class="btn btn-primary">Push zu IONOS</button>
+            </div>
+            <div id="export-status" class="export-status" aria-live="polite"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

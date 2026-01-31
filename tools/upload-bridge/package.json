@@ -1,0 +1,10 @@
+{
+  "name": "ionos-upload-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "main": "server.js",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.624.0"
+  }
+}

@@ -1,2 +1,173 @@
-this is the bulk order processing module in which certain attributes can be changed, but fundamentally it processes bulk orders for later curation. 
-It also shows the progress of said bulk orders.
+PRODUSA Grundidee: Was ist PRODUSA wirklich?
+
+Produsa ist kein Textfeld mit ChatGPT dahinter.
+Produsa ist ein Story-Generator mit deterministischer Struktur.
+
+👉 Mensch gibt ein Thema + Anzahl Videos
+👉 KI liefert strukturierte Story-Bausteine, keine freien Texte
+👉 Alles landet versioniert als JSON im Object Storage
+
+Ziel von PRODUSA (klar definiert)
+Input (manuell)
+
+- Thema / Prompt (frei)
+- Anzahl der gewuenschten Endvideos
+- Optional: Stil / Ton / Zielplattform
+
+Output (automatisch, gespeichert)
+
+- Mehrere Story-Units
+- Jede Story:
+  - Hook
+  - Szenen
+  - Bild-/Video-Beschreibungen
+  - Text/Voiceover
+  - Meta (Risiko, Stil, Laenge)
+
+Kein Rendering. Kein Layout. Nur Inhalt.
+
+Die beste Variante (bewaehrt & skalierbar)
+Zentrale Entscheidung (wichtig!)
+
+- Nicht: ChatGPT schreibt mir eine Story
+- Ja: ChatGPT fuellt ein strikt vorgegebenes JSON-Template
+
+Warum?
+
+- Validierbar
+- Wiederholbar
+- Vergleichbar
+- Automatisch verarbeitbar (LAIM, KRIETA, ELMON)
+
+PRODUSA empfohlene Architektur
+
+User Input
+-> Produsa Prompt Builder
+-> ChatGPT (strict JSON response)
+-> Schema Validation
+-> Object Storage (IONOS)
+-> Weiterverarbeitung (LAIM, KRIETA)
+
+Was du manuell eintippst (Minimal & gut)
+
+Beispiel:
+- Thema: "Waldtiere erleben Abenteuer"
+- Anzahl Videos: 5
+
+Optional spaeter:
+- Stil: lustig / spannend / ASMR
+- Plattform: TikTok / Shorts
+- Zielgruppe
+
+PRODUSA Output-Format (JSON Vorschlag v1)
+
+{
+  "produsa_version": "1.0",
+  "input": {
+    "prompt": "Waldtiere erleben Abenteuer",
+    "requested_videos": 5
+  },
+  "stories": [
+    {
+      "story_id": "story_001",
+      "title": "Der neugierige Fuchs",
+      "hook": "Dieser Fuchs hat etwas Unglaubliches entdeckt",
+      "estimated_duration_sec": 18,
+      "scenes": [
+        {
+          "scene_id": "s1",
+          "description": "Ein Fuchs schleicht neugierig durch einen nebligen Wald",
+          "visual_prompt": "realistic fox in misty forest, cinematic lighting",
+          "action": "Der Fuchs bleibt stehen und lauscht",
+          "voiceover": "Mitten im Wald hoerte der Fuchs ein seltsames Geraeusch."
+        },
+        {
+          "scene_id": "s2",
+          "description": "Der Fuchs entdeckt ein glitzerndes Objekt",
+          "visual_prompt": "fox discovering glowing object on forest floor",
+          "action": "Er naehert sich vorsichtig",
+          "voiceover": "Was er dann sah, haette er nie erwartet."
+        }
+      ],
+      "tags": ["tier", "abenteuer", "wald"],
+      "risk_flags": [],
+      "language": "de"
+    }
+  ],
+  "meta": {
+    "generated_at": "2026-01-30T12:00:00Z",
+    "model": "gpt-4.x",
+    "temperature": 0.8
+  }
+}
+
+Wie ChatGPT das zuverlaessig ausgibt (sehr wichtig)
+Du zwingst ChatGPT mit einem SYSTEM-PROMPT
+
+Sinngemaess (fuer Codex / API):
+
+You are PRODUSA.
+Generate creative story content.
+You MUST respond with valid JSON only.
+Follow exactly the provided JSON schema.
+Do not include explanations or markdown.
+
+Danach gibst du Schema + User-Prompt + Anzahl Videos rein.
+
+Validierung (Pflicht!)
+
+- JSON parsen
+- Gegen produsa.schema.json validieren
+- Nur bei Erfolg speichern
+- Sonst Retry mit korrigierendem Prompt
+
+Speicherung in IONOS Object Storage
+
+Empfohlene Struktur:
+
+produsa/
+  waldtiere-erleben-abenteuer/
+    v1.json
+    v2.json
+    meta.json
+
+Oder UUID-basiert:
+
+produsa/
+  2026-01-30_12-00_abcd1234.json
+
+Vorteil: reproduzierbar & auditierbar
+
+Wie PRODUSA perfekt zu KRIETA passt
+
+PRODUSA -> KRIETA
+visual_prompt -> zone.source
+voiceover -> Subtitle / Audio
+estimated_duration_sec -> Timing
+scenes[] -> Schnittlogik
+
+PRODUSA weiss nichts von Layout
+KRIETA weiss nichts vom Inhalt
+Lose Kopplung = maximale Freiheit
+
+Wichtiger Safety-Hinweis (gerade bei Beispielen)
+
+Beispiele wie:
+- Sachen zerschneiden mit Messer
+- Frau legt sich in verschiedene Betten
+
+Unbedingt in PRODUSA schon:
+"risk_flags": ["violence", "sexual_context"]
+
+Fazit (klar & ehrlich)
+
+Beste Variante:
+- Mensch gibt nur Thema + Anzahl ein
+- KI liefert strukturierte Story-JSONs
+- Alles wird validiert & gespeichert
+
+Kein Freitext-Chaos
+Kein spaeteres Aufraeumen
+
+Ihr baut damit keinen Prompt-Generator,
+ihr baut eine Story-Fabrik.

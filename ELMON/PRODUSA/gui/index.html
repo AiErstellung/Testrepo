@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRODUSA Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">P</div>
+          <div>
+            <div class="brand-title">PRODUSA Studio</div>
+            <div class="brand-note">Story Builder v1</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Stories</h2>
+            <button id="add-story" class="btn btn-primary">+ Story</button>
+          </div>
+          <ul id="story-list" class="story-list"></ul>
+        </div>
+
+        <div class="panel">
+          <h2>Aktionen</h2>
+          <button id="duplicate-story" class="btn">Duplizieren</button>
+          <button id="delete-story" class="btn btn-danger">Loeschen</button>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <section class="input-panel">
+          <div class="panel-header">
+            <div>
+              <h1 id="project-title">Produsa Batch</h1>
+              <p id="project-subtitle">Input und Meta</p>
+            </div>
+            <div class="input-actions">
+              <button id="add-scene" class="btn">+ Szene</button>
+              <button id="generate-stories" class="btn btn-primary">Generate Stories</button>
+            </div>
+          </div>
+
+          <div class="input-grid">
+            <div class="field">
+              <label for="input-prompt">Prompt / Thema</label>
+              <input id="input-prompt" type="text" />
+            </div>
+            <div class="field">
+              <label for="input-count">Anzahl Videos</label>
+              <input id="input-count" type="number" min="1" />
+            </div>
+            <div class="field">
+              <label for="input-generator">ChatGPT Prompt</label>
+              <textarea id="input-generator" rows="3" placeholder="z.B. Erstelle 3 spannende Fakten-Stories..."></textarea>
+            </div>
+            <div class="field">
+              <label for="input-style">Stil</label>
+              <input id="input-style" type="text" placeholder="lustig, spannend ..." />
+            </div>
+            <div class="field">
+              <label for="input-tone">Ton</label>
+              <input id="input-tone" type="text" placeholder="dramatisch, ruhig ..." />
+            </div>
+            <div class="field">
+              <label for="input-platform">Plattform</label>
+              <select id="input-platform">
+                <option value="">-</option>
+                <option value="tiktok">TikTok</option>
+                <option value="youtube_shorts">YouTube Shorts</option>
+                <option value="instagram">Instagram</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="input-audience">Zielgruppe</label>
+              <input id="input-audience" type="text" />
+            </div>
+          </div>
+
+          <div class="story-editor">
+            <div class="story-header">
+              <h2>Story Editor</h2>
+              <div class="story-actions">
+                <button id="delete-scene" class="btn btn-danger">Szene loeschen</button>
+                <button id="regenerate-scene-image" class="btn">Bild neu</button>
+              </div>
+            </div>
+
+            <div class="story-fields">
+              <div class="field">
+                <label for="story-id">Story ID</label>
+                <input id="story-id" type="text" />
+              </div>
+              <div class="field">
+                <label for="story-title">Titel</label>
+                <input id="story-title" type="text" />
+              </div>
+              <div class="field">
+                <label for="story-hook">Hook</label>
+                <input id="story-hook" type="text" />
+              </div>
+              <div class="field">
+                <label for="story-duration">Dauer (sek)</label>
+                <input id="story-duration" type="number" min="1" />
+              </div>
+              <div class="field">
+                <label for="story-tags">Tags (comma)</label>
+                <input id="story-tags" type="text" />
+              </div>
+              <div class="field">
+                <label for="story-risk">Risk Flags (comma)</label>
+                <input id="story-risk" type="text" placeholder="violence, sexual_context" />
+              </div>
+              <div class="field">
+                <label for="story-lang">Sprache</label>
+                <input id="story-lang" type="text" placeholder="de" />
+              </div>
+            </div>
+
+            <div class="scene-board" id="scene-board"></div>
+          </div>
+        </section>
+
+        <section class="inspector">
+          <div class="tabs">
+            <button class="tab active" data-tab="scene">Szene</button>
+            <button class="tab" data-tab="meta">Meta</button>
+            <button class="tab" data-tab="json">JSON</button>
+          </div>
+
+          <div class="tab-content active" id="tab-scene">
+            <div class="field">
+              <label for="scene-id">Scene ID</label>
+              <input id="scene-id" type="text" />
+            </div>
+            <div class="field">
+              <label for="scene-desc">Beschreibung</label>
+              <textarea id="scene-desc" rows="3"></textarea>
+            </div>
+            <div class="field">
+              <label for="scene-visual">Visual Prompt</label>
+              <textarea id="scene-visual" rows="3"></textarea>
+            </div>
+            <div class="field">
+              <label for="scene-action">Action</label>
+              <textarea id="scene-action" rows="2"></textarea>
+            </div>
+            <div class="field">
+              <label for="scene-voice">Voiceover</label>
+              <textarea id="scene-voice" rows="3"></textarea>
+            </div>
+            <div class="field">
+              <label for="scene-image">Scene Image URL</label>
+              <input id="scene-image" type="text" />
+            </div>
+            <div class="scene-image-preview">
+              <img id="scene-image-preview" alt="Scene image preview" />
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-meta">
+            <div class="field">
+              <label for="meta-generated">Generated At</label>
+              <input id="meta-generated" type="text" />
+            </div>
+            <div class="field">
+              <label for="meta-model">Model</label>
+              <input id="meta-model" type="text" />
+            </div>
+            <div class="field">
+              <label for="meta-temp">Temperature</label>
+              <input id="meta-temp" type="number" step="0.1" min="0" max="2" />
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-json">
+            <div class="field">
+              <label for="json-output">JSON</label>
+              <textarea id="json-output" rows="16"></textarea>
+            </div>
+            <div class="json-actions">
+              <button id="copy-json" class="btn">Kopieren</button>
+              <button id="import-json" class="btn">Importieren</button>
+              <button id="export-json" class="btn btn-primary">Export JSON</button>
+              <button id="upload-ionos" class="btn btn-primary">Push zu IONOS</button>
+            </div>
+            <div id="export-status" class="export-status" aria-live="polite"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
