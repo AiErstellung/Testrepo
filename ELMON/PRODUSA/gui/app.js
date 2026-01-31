@@ -179,6 +179,10 @@ function renderScenes() {
       thumb.className = "scene-thumb";
       thumb.src = scene.image_url;
       thumb.alt = scene.scene_id;
+      thumb.addEventListener("click", (event) => {
+        event.stopPropagation();
+        openImage(scene.image_url);
+      });
       card.appendChild(thumb);
     } else {
       const placeholder = document.createElement("div");
@@ -488,6 +492,12 @@ function bindInputs() {
     renderAll();
   });
 
+  dom.sceneImagePreview.addEventListener("click", () => {
+    const scene = activeScene();
+    if (!scene?.image_url) return;
+    openImage(scene.image_url);
+  });
+
   dom.metaGenerated.addEventListener("input", (event) => {
     state.project.meta.generated_at = event.target.value;
     saveState();
@@ -647,6 +657,11 @@ function setExportStatus(message, type = "") {
   dom.exportStatus.textContent = message;
   dom.exportStatus.classList.remove("success", "error");
   if (type) dom.exportStatus.classList.add(type);
+}
+
+function openImage(url) {
+  if (!url) return;
+  window.open(url, "_blank", "noopener");
 }
 
 async function regenerateSceneImage(scene) {

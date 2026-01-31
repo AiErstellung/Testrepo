@@ -214,6 +214,7 @@ h1, h2, h3 {
   border-radius: 10px;
   object-fit: cover;
   background: #0f151d;
+  cursor: zoom-in;
 }
 
 .scene-thumb-placeholder {
@@ -237,6 +238,7 @@ h1, h2, h3 {
   border-radius: 10px;
   object-fit: cover;
   max-height: 260px;
+  cursor: zoom-in;
 }
 
 .scene-card.selected {
